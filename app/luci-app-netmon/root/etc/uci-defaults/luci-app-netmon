@@ -1,0 +1,20 @@
+#!/bin/sh
+[ -f /etc/vnstat.conf ] && {
+	sed -Ei "s|;Interface \"\"|Interface \"br-lan\"|; \
+             s|;DatabaseDir \"\/var\/lib\/vnstat\"|DatabaseDir \"\/etc\/vnstat\"|; \
+             s|;LargeFonts 0|LargeFonts 1|; \
+             s|;ImageScale 100|ImageScale 100|" /etc/vnstat.conf
+}
+[ -z $(grep -i '/www/netmon/vnstati.sh' /etc/crontabs/root) ] && {
+	sed -i '$a\*/1 * * * * bash /www/netmon/vnstati.sh >/dev/null 2>&1' /etc/crontabs/root
+}
+[ -z $(uci -q get vnstat.@vnstat[0].interface | grep -i 'br-lan' >/dev/null) ] && {
+	uci -q set vnstat.@vnstat[0].interface='br-lan'
+	uci commit vnstat
+}
+[ -z $(vnstat --dbiflist br-lan | grep -i 'Interfaces in database: br-lan' >/dev/null) ] && {
+	vnstat --add -i br-lan
+}
+bash /www/netmon/vnstati.sh
+
+exit 0

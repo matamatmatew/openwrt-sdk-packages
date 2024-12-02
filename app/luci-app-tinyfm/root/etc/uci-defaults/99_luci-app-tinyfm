@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# uhttpd
+uci -q get uhttpd.main.ubus_prefix|grep -i '/ubus' >/dev/null || uci set uhttpd.main.ubus_prefix='/ubus'
+uci -q get uhttpd.main.index_page|grep -i 'index.php' >/dev/null || uci add_list uhttpd.main.index_page='index.php'
+uci -q get uhttpd.main.index_page|grep -i 'index.html' >/dev/null || uci add_list uhttpd.main.index_page='index.html'
+uci -q get uhttpd.main.index_page|grep -i 'cgi-bin/luci' >/dev/null || uci add_list uhttpd.main.index_page='cgi-bin/luci'
+uci -q get uhttpd.main.interpreter|grep -i '.php=/usr/bin/php-cgi' >/dev/null || uci add_list uhttpd.main.interpreter='.php=/usr/bin/php-cgi'
+uci changes uhttpd|grep . >/dev/null && uci commit uhttpd
+/etc/init.d/uhttpd reload
+[ -d /usr/lib/php8 ] && [ ! -d /usr/lib/php ] && ln -sf /usr/lib/php8 /usr/lib/php
+
+mkdir -p /www/tinyfm 2>/dev/null
+[ ! -d /www/tinyfm/rootfs ] && ln -s / /www/tinyfm/rootfs
+[ -d /etc/openclash ] && [ ! -d /www/tinyfm/openclash ] && ln -s /etc/openclash /www/tinyfm/openclash
+[ -d /etc/mihomo ] && [ ! -d /www/tinyfm/mihomo ] && ln -s /etc/mihomo /www/tinyfm/mihomo
+exit 0

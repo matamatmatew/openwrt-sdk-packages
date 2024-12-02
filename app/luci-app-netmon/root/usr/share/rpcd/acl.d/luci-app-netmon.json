@@ -1,0 +1,29 @@
+{
+	"luci-app-netmon": {
+		"description": "Grant access to netmon",
+		"write": {
+			"ubus": {
+				"file": [ "read", "exec", "write" ]
+			},
+			"file": {
+				"/usr/bin/vnstati -[5dhmsty] -i * -o -": [ "exec" ],
+				"/www/netmon/*.png": [ "write" ],
+				"/usr/bin/vnstat": [ "exec" ],
+				"/usr/bin/vnstati": [ "exec" ],
+				"/www/netmon/vnstati.sh": [ "exec" ]
+			}
+		},
+		"read": {
+			"ubus": {
+				"file": [ "read", "exec" ]
+			},
+			"file": {
+				"/usr/bin/vnstati -[5dhmsty] -i * -o -": [ "exec" ],
+				"/www/netmon/*.png": [ "read" ],
+				"/usr/bin/vnstat": [ "exec" ],
+				"/usr/bin/vnstati": [ "exec" ],
+				"/www/netmon/vnstati.sh": [ "exec" ]
+			}
+		}
+	}
+}

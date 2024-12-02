@@ -1,0 +1,7 @@
+config ipinfo 'config'
+	option enable '1'
+	option token 'e0490391be5e4827a3e700ed821ef51b'
+	list isp 'ip'
+	list isp 'isp'
+	list loc 'city'
+	list loc 'country_name'

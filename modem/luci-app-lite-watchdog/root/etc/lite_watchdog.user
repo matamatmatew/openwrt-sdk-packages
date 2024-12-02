@@ -1,0 +1,2 @@
+#!/bin/sh
+echo AT+CFUN=1,1 | atinout - /dev/ttyACM2 -

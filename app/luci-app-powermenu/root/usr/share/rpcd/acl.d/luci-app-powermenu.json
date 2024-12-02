@@ -1,0 +1,25 @@
+{
+	"luci-app-powermenu": {
+		"description": "Allow rebooting the device",
+		"write": {
+			"ubus": {
+				"file": [ "exec" ],
+				"system": [ "reboot", "poweroff" ]
+			},
+			"file": {
+				"/sbin/reboot -f": [ "exec" ],
+				"/sbin/poweroff -f": [ "exec" ]
+			}
+		},
+		"read": {
+			"ubus": {
+				"file": [ "exec" ],
+				"system": [ "reboot", "poweroff" ]
+			},
+			"file": {
+				"/sbin/reboot -f": [ "exec" ],
+				"/sbin/poweroff -f": [ "exec" ]
+			}
+		}
+	}
+}

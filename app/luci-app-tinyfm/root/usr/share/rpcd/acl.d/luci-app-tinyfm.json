@@ -1,0 +1,15 @@
+{
+    "luci-app-tinyfm": {
+        "description": "Grant access to tinyfm configuration",
+        "read": {
+            "ubus": {
+                "file": [ "list", "read", "stat" ]
+            }
+        },
+        "write": {
+            "ubus": {
+                "file": [ "write", "remove" ]
+            }
+        }
+    }
+}
